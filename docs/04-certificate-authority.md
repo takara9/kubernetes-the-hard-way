@@ -395,11 +395,13 @@ service-account.pem
 
 ## Distribute the Client and Server Certificates
 
+
+
 Copy the appropriate certificates and private keys to each worker instance:
 
 ```
 for instance in worker-0 worker-1; do
-  scp ca.pem ${instance}-key.pem ${instance}.pem ${instance}:~/
+  sudo scp ca.pem ${instance}-key.pem ${instance}.pem ${instance}:~/
 done
 ```
 
@@ -407,7 +409,7 @@ Copy the appropriate certificates and private keys to each controller instance:
 
 ```
 for instance in controller-0; do
-  scp ca.pem ca-key.pem kubernetes-key.pem kubernetes.pem \
+  sudo scp ca.pem ca-key.pem kubernetes-key.pem kubernetes.pem \
     service-account-key.pem service-account.pem ${instance}:~/
 done
 ```
