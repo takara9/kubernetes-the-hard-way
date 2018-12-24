@@ -6,8 +6,10 @@ In this lab you will bootstrap three Kubernetes worker nodes. The following comp
 
 The commands in this lab must be run on each worker instance: `worker-0`, `worker-1`, and `worker-2`. Login to each worker instance using the `gcloud` command. Example:
 
+kadminからログインする
+
 ```
-vagrant ssh worker-0
+sudo ssh worker-0
 ```
 
 ### Running commands in parallel with tmux
@@ -192,7 +194,7 @@ authorization:
   mode: Webhook
 clusterDomain: "cluster.local"
 clusterDNS:
-  - "10.32.0.10"
+  - "10.244.0.10"
 podCIDR: "${POD_CIDR}"
 resolvConf: "/run/systemd/resolve/resolv.conf"
 runtimeRequestTimeout: "15m"
@@ -222,6 +224,7 @@ ExecStart=/usr/local/bin/kubelet \\
   --kubeconfig=/var/lib/kubelet/kubeconfig \\
   --network-plugin=cni \\
   --register-node=true \\
+  --cluster-dns=10.244.0.10 \\
   --v=2
 Restart=on-failure
 RestartSec=5

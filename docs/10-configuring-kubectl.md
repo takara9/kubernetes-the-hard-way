@@ -12,8 +12,9 @@ Generate a kubeconfig file suitable for authenticating as the `admin` user:
 
 ```
 vagarnt ssh kadmin
-vagrant@kadmin:~$ cp ca.pem /vagrant/vagrant/
-vagrant@kadmin:~$ cp admin-*.pem /vagrant/vagrant/
+cp ca.pem /vagrant/vagrant/
+cp admin-*.pem /vagrant/vagrant/
+cp admin.pem /vagrant/vagrant/
 exit
 ```
 

@@ -6,8 +6,10 @@ Kubernetes components are stateless and store cluster state in [etcd](https://gi
 
 The commands in this lab must be run on each controller instance: `controller-0`, `controller-1`, and `controller-2`. Login to each controller instance using the `gcloud` command. Example:
 
+kadminからsshを実行する。
+
 ```
-vagrant ssh controller-0
+sudo ssh controller-0
 ```
 
 ### Running commands in parallel with tmux
@@ -37,8 +39,6 @@ Extract and install the `etcd` server and the `etcdctl` command line utility:
 ### Configure the etcd Server
 
 ```
-sudo -i
-
 {
   sudo mkdir -p /etc/etcd /var/lib/etcd
   sudo cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd/
