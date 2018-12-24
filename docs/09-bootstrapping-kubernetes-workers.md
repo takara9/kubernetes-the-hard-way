@@ -167,6 +167,7 @@ EOF
 ### Configure the Kubelet
 
 ```
+sudo -i
 {
   sudo mv ${HOSTNAME}-key.pem ${HOSTNAME}.pem /var/lib/kubelet/
   sudo mv ${HOSTNAME}.kubeconfig /var/lib/kubelet/kubeconfig
@@ -278,6 +279,12 @@ EOF
 }
 ```
 
+```
+  sudo systemctl status containerd kubelet kube-proxy
+```
+
+
+
 > Remember to run the above commands on each worker node: `worker-0`, `worker-1`, and `worker-2`.
 
 ## Verification
@@ -287,8 +294,9 @@ EOF
 List the registered Kubernetes nodes:
 
 ```
-vagrant ssh controller-0 \
-  --command "kubectl get nodes --kubeconfig admin.kubeconfig"
+vagrant ssh controller-0
+sudo -i
+kubectl get nodes --kubeconfig admin.kubeconfig
 ```
 
 > output

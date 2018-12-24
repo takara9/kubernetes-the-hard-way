@@ -11,8 +11,17 @@ Each kubeconfig requires a Kubernetes API Server to connect to. To support high 
 Generate a kubeconfig file suitable for authenticating as the `admin` user:
 
 ```
+vagarnt ssh kadmin
+vagrant@kadmin:~$ cp ca.pem /vagrant/vagrant/
+vagrant@kadmin:~$ cp admin-*.pem /vagrant/vagrant/
+exit
+```
+
+
+
+```
 {
-  KUBERNETES_PUBLIC_ADDRESS=192.168.40.10
+  KUBERNETES_PUBLIC_ADDRESS=192.168.1.50
 
   kubectl config set-cluster kubernetes-the-hard-way \
     --certificate-authority=ca.pem \

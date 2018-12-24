@@ -46,6 +46,8 @@ Install the Kubernetes binaries:
 ### Configure the Kubernetes API Server
 
 ```
+sudo -i
+
 {
   sudo mkdir -p /var/lib/kubernetes/
 
@@ -196,6 +198,8 @@ EOF
   sudo systemctl enable kube-apiserver kube-controller-manager kube-scheduler
   sudo systemctl start kube-apiserver kube-controller-manager kube-scheduler
 }
+
+sudo systemctl status kube-apiserver kube-controller-manager kube-scheduler
 ```
 
 > Allow up to 10 seconds for the Kubernetes API Server to fully initialize.
@@ -253,9 +257,7 @@ kubectl get componentstatuses --kubeconfig admin.kubeconfig
 NAME                 STATUS    MESSAGE              ERROR
 controller-manager   Healthy   ok
 scheduler            Healthy   ok
-etcd-2               Healthy   {"health": "true"}
 etcd-0               Healthy   {"health": "true"}
-etcd-1               Healthy   {"health": "true"}
 ```
 
 Test the nginx HTTP health check proxy:
@@ -284,7 +286,7 @@ In this section you will configure RBAC permissions to allow the Kubernetes API 
 > This tutorial sets the Kubelet `--authorization-mode` flag to `Webhook`. Webhook mode uses the [SubjectAccessReview](https://kubernetes.io/docs/admin/authorization/#checking-api-access) API to determine authorization.
 
 ```
-gcloud compute ssh controller-0
+vagrant ssh controller-0
 ```
 
 Create the `system:kube-apiserver-to-kubelet` [ClusterRole](https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole) with permissions to access the Kubelet API and perform most common tasks associated with managing pods:
@@ -337,12 +339,16 @@ EOF
 
 ## The Kubernetes Frontend Load Balancer
 
+不要
+
 In this section you will provision an external load balancer to front the Kubernetes API Servers. The `kubernetes-the-hard-way` static IP address will be attached to the resulting load balancer.
 
 > The compute instances created in this tutorial will not have permission to complete this section. Run the following commands from the same machine used to create the compute instances.
 
 
 ### Provision a Network Load Balancer
+
+不要
 
 Create the external load balancer network resources:
 
@@ -380,15 +386,16 @@ Create the external load balancer network resources:
 
 Retrieve the `kubernetes-the-hard-way` static IP address:
 
-```
-KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-hard-way \
-  --region $(gcloud config get-value compute/region) \
-  --format 'value(address)')
-```
+
 
 Make a HTTP request for the Kubernetes version info:
 
 ```
+vagarnt ssh kadmin
+```
+
+```
+KUBERNETES_PUBLIC_ADDRESS=192.168.1.50
 curl --cacert ca.pem https://${KUBERNETES_PUBLIC_ADDRESS}:6443/version
 ```
 
