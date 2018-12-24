@@ -287,7 +287,7 @@ EOF
 List the registered Kubernetes nodes:
 
 ```
-gcloud compute ssh controller-0 \
+vagrant ssh controller-0 \
   --command "kubectl get nodes --kubeconfig admin.kubeconfig"
 ```
 
@@ -297,7 +297,6 @@ gcloud compute ssh controller-0 \
 NAME       STATUS   ROLES    AGE   VERSION
 worker-0   Ready    <none>   35s   v1.12.0
 worker-1   Ready    <none>   36s   v1.12.0
-worker-2   Ready    <none>   36s   v1.12.0
 ```
 
 Next: [Configuring kubectl for Remote Access](10-configuring-kubectl.md)
