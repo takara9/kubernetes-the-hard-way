@@ -169,7 +169,6 @@ EOF
 ### Configure the Kubelet
 
 ```
-sudo -i
 {
   sudo mv ${HOSTNAME}-key.pem ${HOSTNAME}.pem /var/lib/kubelet/
   sudo mv ${HOSTNAME}.kubeconfig /var/lib/kubelet/kubeconfig
@@ -208,6 +207,7 @@ EOF
 Create the `kubelet.service` systemd unit file:
 
 ```
+INTERNAL_IP=$(ip addr show enp0s8 | grep -Po 'inet \K[\d.]+')
 cat <<EOF | sudo tee /etc/systemd/system/kubelet.service
 [Unit]
 Description=Kubernetes Kubelet
@@ -225,6 +225,7 @@ ExecStart=/usr/local/bin/kubelet \\
   --network-plugin=cni \\
   --register-node=true \\
   --cluster-dns=10.244.0.10 \\
+  --node-ip=${INTERNAL_IP} \\
   --v=2
 Restart=on-failure
 RestartSec=5

@@ -59,6 +59,7 @@ The instance internal IP address will be used to advertise the API Server to mem
 
 ```
 INTERNAL_IP=$(ip addr show enp0s8 | grep -Po 'inet \K[\d.]+')
+EXTERNEL_IP=$(ip addr show enp0s9 | grep -Po 'inet \K[\d.]+')
 ```
 
 Create the `kube-apiserver.service` systemd unit file:
@@ -71,7 +72,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 
 [Service]
 ExecStart=/usr/local/bin/kube-apiserver \\
-  --advertise-address=${INTERNAL_IP} \\
+  --advertise-address=${EXTERNEL_IP} \\
   --allow-privileged=true \\
   --apiserver-count=3 \\
   --audit-log-maxage=30 \\
@@ -86,7 +87,7 @@ ExecStart=/usr/local/bin/kube-apiserver \\
   --etcd-cafile=/var/lib/kubernetes/ca.pem \\
   --etcd-certfile=/var/lib/kubernetes/kubernetes.pem \\
   --etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem \\
-  --etcd-servers=https://172.16.40.10:2379 \\
+  --etcd-servers=https://127.0.0.1:2379 \\
   --event-ttl=1h \\
   --experimental-encryption-provider-config=/var/lib/kubernetes/encryption-config.yaml \\
   --kubelet-certificate-authority=/var/lib/kubernetes/ca.pem \\
@@ -95,7 +96,7 @@ ExecStart=/usr/local/bin/kube-apiserver \\
   --kubelet-https=true \\
   --runtime-config=api/all \\
   --service-account-key-file=/var/lib/kubernetes/service-account.pem \\
-  --service-cluster-ip-range=10.244.0.0/24 \\
+  --service-cluster-ip-range=10.244.0.0/16 \\
   --service-node-port-range=30000-32767 \\
   --tls-cert-file=/var/lib/kubernetes/kubernetes.pem \\
   --tls-private-key-file=/var/lib/kubernetes/kubernetes-key.pem \\
@@ -130,13 +131,13 @@ ExecStart=/usr/local/bin/kube-controller-manager \\
   --allocate-node-cidrs=true \
   --cluster-cidr=10.244.0.0/16 \
   --cluster-name=kubernetes \\
+  --node-cidr-mask-size=24 \\
   --cluster-signing-cert-file=/var/lib/kubernetes/ca.pem \\
   --cluster-signing-key-file=/var/lib/kubernetes/ca-key.pem \\
   --kubeconfig=/var/lib/kubernetes/kube-controller-manager.kubeconfig \\
   --leader-elect=true \\
   --root-ca-file=/var/lib/kubernetes/ca.pem \\
   --service-account-private-key-file=/var/lib/kubernetes/service-account-key.pem \\
-  --service-cluster-ip-range=10.244.0.0/24 \\
   --use-service-account-credentials=true \\
   --v=2
 Restart=on-failure
