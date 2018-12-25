@@ -1,5 +1,17 @@
 # Kubernetes The Hard Way
 
+Vagrantで演習できる様に改造したKubernetes The Hard Way です。
+
+変更点は次の通りです。
+
+* ローカルのPC/Mac環境で実行できる
+* gcloud -> vagrantに変わる
+* コントローラーノードは、3個から1個へ変更
+* ワーカーノードは、3個から2個に変更
+* 外部ロードバランサーとの連携はなし
+
+
+
 This tutorial walks you through setting up Kubernetes the hard way. This guide is not for people looking for a fully automated command to bring up a Kubernetes cluster. If that's you then check out [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine), or the [Getting Started Guides](http://kubernetes.io/docs/getting-started-guides/).
 
 Kubernetes The Hard Way is optimized for learning, which means taking the long route to ensure you understand each task required to bootstrap a Kubernetes cluster.
