@@ -12,8 +12,10 @@ Each kubeconfig requires a Kubernetes API Server to connect to. To support high 
 
 Retrieve the `kubernetes-the-hard-way` static IP address:
 
+パソコン外部に開く場合は、192.168.1.50とする。　Vagrant内なら172.16.40.10
+
 ```
-KUBERNETES_PUBLIC_ADDRESS=192.168.1.50
+KUBERNETES_PUBLIC_ADDRESS=172.16.40.10
 ```
 
 ### The kubelet Kubernetes Configuration File
@@ -23,6 +25,8 @@ When generating kubeconfig files for Kubelets the client certificate matching th
 Generate a kubeconfig file for each worker node:
 
 ```
+KUBERNETES_PUBLIC_ADDRESS=172.16.40.10
+
 for instance in worker-0 worker-1; do
   kubectl config set-cluster kubernetes-the-hard-way \
     --certificate-authority=ca.pem \
