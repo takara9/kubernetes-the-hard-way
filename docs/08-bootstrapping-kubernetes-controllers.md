@@ -59,7 +59,8 @@ The instance internal IP address will be used to advertise the API Server to mem
 
 ```
 INTERNAL_IP=$(ip addr show enp0s8 | grep -Po 'inet \K[\d.]+')
-EXTERNEL_IP=$(ip addr show enp0s9 | grep -Po 'inet \K[\d.]+')
+
+EXTERNAL_IP=$(ip addr show enp0s9 | grep -Po 'inet \K[\d.]+')
 ```
 
 Create the `kube-apiserver.service` systemd unit file:
@@ -72,7 +73,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 
 [Service]
 ExecStart=/usr/local/bin/kube-apiserver \\
-  --advertise-address=${EXTERNEL_IP} \\
+  --advertise-address=${EXTERNAL_IP} \\
   --allow-privileged=true \\
   --apiserver-count=3 \\
   --audit-log-maxage=30 \\
