@@ -25,7 +25,7 @@ When generating kubeconfig files for Kubelets the client certificate matching th
 Generate a kubeconfig file for each worker node:
 
 ```
-KUBERNETES_PUBLIC_ADDRESS=172.16.40.10
+KUBERNETES_PUBLIC_ADDRESS=192.168.1.50
 
 for instance in worker-0 worker-1; do
   kubectl config set-cluster kubernetes-the-hard-way \
